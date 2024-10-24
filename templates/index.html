@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Script Executor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Upload Python Script</h2>
+        <form id="uploadForm">
+            <label for="scriptInput">Enter your Python script:</label><br>
+            <textarea id="scriptInput" rows="10" style="width:100%;"></textarea><br><br>
+            <button type="submit">Run Script</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const script = document.getElementById('scriptInput').value;
+            const resultDiv = document.getElementById('result');
+
+            // Clear previous result
+            resultDiv.innerHTML = '';
+
+            if (!script.trim()) {
+                resultDiv.innerHTML = '<strong>Error:</strong> Please provide a Python script.';
+                return;
+            }
+
+            // Perform AJAX request to upload and execute the Python script
+            fetch('/execute', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ script: script })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    resultDiv.innerHTML = `<strong>Error:</strong> ${data.error}`;
+                } else {
+                    resultDiv.innerHTML = `<strong>Result:</strong> ${JSON.stringify(data.result, null, 2)}`;
+                }
+            })
+            .catch(error => {
+                resultDiv.innerHTML = `<strong>Error:</strong> ${error}`;
+            });
+        });
+    </script>
+</body>
+</html>
