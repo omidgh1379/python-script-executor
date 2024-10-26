@@ -13,7 +13,7 @@ This project is a Flask-based API service that enables secure execution of arbit
 * **API Endpoint**: Accepts POST requests with the Python script provided in JSON format. Executes the `main()` function and returns its JSON result or an error message.
 * **Dockerized**: Built with `python:3.9-slim-buster` for an efficient and lightweight Docker image.
 * **Google Cloud Run Compatible**: Deployable on Google Cloud Run using the second-generation runtime environment for enhanced compatibility with `nsjail`.
-* **The link of the app**: ['Google cloud url'][https://python-script-executor-997189946535.us-central1.run.app/]
+* **The link of the app**: [Google cloud url][https://python-script-executor-997189946535.us-central1.run.app/]
 
 ## Deployment Instructions
 * **Local Testing**: Build and run the Docker image locally using `docker build` and `docker run` commands.
